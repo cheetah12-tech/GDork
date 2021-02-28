@@ -26,8 +26,6 @@ from itertools import zip_longest
 from termcolor import colored
 from multiprocessing.dummy import Pool
 
-# API CONFIG
-GITHUB_API_URL = 'https://api.github.com'
 
 # PARSER CONFIG
 parser = argparse.ArgumentParser()
@@ -49,24 +47,12 @@ parser.parse_args()
 args = parser.parse_args()
 
 # DECLARE LISTS
-tokens_list = []
 dorks_list = []
 queries_list = []
 organizations_list = []
 users_list = []
 keywords_list = []
 # rows = []
-
-# TOKEN ARGUMENT LOGIC
-if args.token:
-    tokens_list = args.token.split(',')
-
-if args.tokenfile:
-    with open(args.tokenfile) as f:
-        tokens_list = [i.strip() for i in f.read().splitlines() if i.strip()]
-
-# if not len(tokens_list):
-#     parser.error('auth token is missing')
 
 # USER ARGUMENT LOGIC
 if args.users:
@@ -114,16 +100,6 @@ if not args.dorks and not args.keyword:
 
 # TOKEN ROUND ROBIN
 n = -1
-
-
-def token_round_robin():
-    global n
-    n = n + 1
-    if n == len(tokens_list):
-        n = 0
-    current_token = tokens_list[n]
-    return current_token
-
 
 # API SEARCH FUNCTION
 def api_search(url):
